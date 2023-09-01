@@ -1,0 +1,41 @@
+{
+"target": "terminus_open",
+"auto_close": false,
+"title": "Python Output",
+
+
+"pre_window_hooks": [
+	["window_focus", {"store": true}],
+	["close_terminus_view_by_title", {"title": "Python Output"}],
+	["window_focus", {"store": false}],
+],
+"post_window_hooks": [
+	[ "move_tab_back"],
+	[ "carry_file_to_pane", { "direction": "right"} ],
+	["toggle_zoom_pane", { "fraction": 0.4 } ],  //slightly reducing the terminal view size
+],
+
+
+
+	"cmd": ["python3", "-u", "$file"],
+	"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+	"selector": "source.python",
+
+	"env": {"PYTHONIOENCODING": "utf-8"},
+
+	"windows": {
+		"cmd": ["py", "-u", "$file"],
+	},
+
+	"variants":
+	[
+		{
+			"name": "Syntax Check",
+			"cmd": ["python3", "-m", "py_compile", "$file"],
+
+			"windows": {
+				"cmd": ["py", "-m", "py_compile", "$file"],
+			}
+		}
+	]
+}
